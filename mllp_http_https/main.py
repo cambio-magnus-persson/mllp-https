@@ -475,6 +475,16 @@ environment variables:
     parser.add_argument(
         "-v", "--version", action="version", version="%(prog)s {}".format(__version__)
     )
+    parser.add_argument(
+        "--certfile",
+        default=None,
+        help="Path to certfile",
+    )
+    parser.add_argument(
+        "--keyfile",
+        default=None,
+        help="Path to keyfile",
+    )
 
     args = parser.parse_args()
 
@@ -517,6 +527,8 @@ environment variables:
         verify=args.verify,
         username=args.username if args.username else None,
         password=args.password if args.password else None,
+        certfile=args.certfile if args.certfile else None,
+        keyfile=args.keyfile if args.keyfile else None,
     )
     mllp_server_options = mllp_http_https.mllp2https.MllpServerOptions(
         timeout=args.timeout / 1000 if args.timeout else None

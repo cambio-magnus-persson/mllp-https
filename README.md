@@ -70,7 +70,7 @@ python setup.py install
 ## Run as
 ### Command Line
 ```sh
-http2mllp localhost 
+http2mllp localhost
 
 mllp2http http://localhost:8000
 
@@ -105,7 +105,7 @@ docker run -it -p 2575:2575 --rm tiagoepr/mllp-https mllp2http http://host.docke
 
 docker run -it -p 8000:8000 --rm tiagoepr/mllp-https https2mllp host.docker.internal (See note below about SSL certificate)
 
-docker run -it -p 2575:2575 --rm tiagoepr/mllp-https mllp2https https://host.docker.internal:8000    
+docker run -it -p 2575:2575 --rm tiagoepr/mllp-https mllp2https https://host.docker.internal:8000
 ```
 #### Notes on SSL/TLS:
 To use https2mllp as a https server/listener, it is required to provide a valid path for SSL certificate file and private key file. In order to do that, both certificate and key files should be firstly copied onto the Docker container and then the respective paths given as argument.
@@ -252,6 +252,8 @@ optional arguments:
   --password PASSWORD   User password for HTTPS server authentication (Optional). If not provided, authentication will be skipped. (default: None)
   --content-type CONTENT_TYPE
                         HTTPS Content-Type header (default: application/hl7-v2; charset=utf-8)
+  --certfile CERTFILE   Path for HTTPS Server's SSL/TLS Certificate.
+  --keyfile KEYFILE     Path for HTTPS Server's SSL/TLS Private Key.
   --log-level {error,warn,info}
   --log-folder LOG_FOLDER   Path to folder where the logs will be placed. If not provided logging will be done on command window. (default: None)
   --mllp-release {1}    MLLP release version (default: 1)

@@ -43,6 +43,8 @@ class MllpHandler(socketserver.StreamRequestHandler):
         # If username and password are provided as arguments, use authentication
         self.username = https_options.username
         self.password = https_options.password
+        self.certfile = https_options.certfile
+        self.keyfile = https_options.keyfile
         self.auth = None
         if self.username and self.password:
             self.auth = ''
@@ -115,6 +117,7 @@ class MllpHandler(socketserver.StreamRequestHandler):
                         timeout=self.https_options.timeout,
                         verify=self.https_options.verify,  # To verify server SSL/TLS certificate. Keep as False only
                         # when using a self-sign certificate since the library does not allow self-signed certificates
+                        cert=(self.certfile, self.keyfile)
                     )
                     response.raise_for_status()  # Get ACK response
                 except requests.exceptions.HTTPError as e:
@@ -142,7 +145,7 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 
 
 class HttpsClientOptions:
-    def __init__(self, content_type, timeout, verify, username, password):
+    def __init__(self, content_type, timeout, verify, username, password, certfile, keyfile):
         self.content_type = content_type
         self.timeout = timeout
         self.verify = True
@@ -154,6 +157,8 @@ class HttpsClientOptions:
             self.verify = verify
         self.username = username
         self.password = password
+        self.certfile = certfile
+        self.keyfile = keyfile
 
 
 def serve(address, options, https_url, https_options):
